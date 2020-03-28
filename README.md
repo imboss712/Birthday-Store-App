@@ -62,6 +62,28 @@ If No friend in JSON File, then it will show something like this
   <img src="./Images/emptyDatabase.png">
 </p>
 
+### Sort all friends's birthdate
+
+`node app.js sort`
+
+<p align="center">
+  <img src="./Images/sortFriend.png">
+</p>
+
+If No birthdate in JSON File, then it will show something like this
+
+<p align="center">
+  <img src="./Images/notFoundBday.png">
+</p>
+
+### Get latest single upcoming birthdate
+
+`node app.js latest`
+
+<p align="center">
+  <img src="./Images/latest.png">
+</p>
+
 ### About Developer
 
 `node app.js developer`
