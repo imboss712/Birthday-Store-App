@@ -93,13 +93,74 @@ const listFriends = () => {
         chalk.white.inverse(chalk.bold(" Name : ") + friend.name + " ")
       );
       console.log(
-        chalk.white.inverse(
+        chalk.green.inverse(
           chalk.bold(" Date of Birth : ") +
             moment(friend.dob, "DD-MM-YYYY").format("DD-MM-YYYY") +
-            " \n"
+            " "
+        )
+      );
+      console.log(
+        chalk.white.inverse(
+          chalk.bold(" Current Age : ") +
+            moment(friend.dob, "DD-MM-YYYY").fromNow(true)
+        ) + " \n"
+      );
+    });
+  }
+};
+
+// Sort all friends's birthdates
+
+const sortBirthdates = () => {
+  const friends = upcomingBday();
+  if (!friends || friends.length === 0) {
+    console.log(chalk.red.inverse("\n No birthdate found !!! \n"));
+  } else {
+    console.log(chalk.white.bgGreen("\n Upcoming birthdates !!! \n"));
+    const sortedList = friends.sort((a, b) => {
+      return moment(a.dob, "DD-MM-YYYY").diff(moment(b.dob, "DD-MM-YYYY"));
+    });
+    sortedList.forEach(friend => {
+      console.log(
+        chalk.white.bgBlue(
+          " " +
+            moment(friend.dob, "DD-MM-YYYY").format("dddd DD MMMM YYYY") +
+            " - " +
+            friend.name +
+            " "
+        )
+      );
+      console.log(
+        chalk.white.bgRed(
+          " " + moment(friend.dob, "DD-MM-YYYY").fromNow() + " \n"
         )
       );
     });
+  }
+};
+
+// Get Latest single upcoming birthdate
+
+const getLatest = () => {
+  const friends = upcomingBday();
+  if (!friends || friends.length === 0) {
+    console.log(chalk.red.inverse("\n No birthdate found !!! \n"));
+  } else {
+    console.log(chalk.white.bgMagenta("\n Latest upcoming birthdate !!! \n"));
+    console.log(
+      chalk.white.bgBlue(
+        " " +
+          moment(friends[0].dob, "DD-MM-YYYY").format("dddd DD MMMM YYYY") +
+          " - " +
+          friends[0].name +
+          " "
+      )
+    );
+    console.log(
+      chalk.white.bgRed(
+        " " + moment(friends[0].dob, "DD-MM-YYYY").fromNow() + " \n"
+      )
+    );
   }
 };
 
@@ -120,9 +181,37 @@ const loadFriends = () => {
   }
 };
 
+// Update all friends's birthdates from JSON file
+
+const upcomingBday = () => {
+  const friends = loadFriends();
+  if (!friends || friends.length === 0) {
+    return [];
+  } else {
+    const Upcoming = friends.filter(friend => {
+      let newDob = moment(friend.dob, "DD-MM-YYYY").set(
+        "year",
+        moment().year()
+      );
+
+      if (newDob.diff(moment()) < 0) {
+        newDob = moment(friend.dob, "DD-MM-YYYY").set(
+          "year",
+          moment().year() + 1
+        );
+      }
+      friend.dob = moment(newDob, "DD-MM-YYYY");
+      return true;
+    });
+    return Upcoming;
+  }
+};
+
 module.exports = {
   addFriend,
   removeFriend,
   readFriend,
-  listFriends
+  listFriends,
+  sortBirthdates,
+  getLatest
 };
