@@ -4,7 +4,9 @@ const {
   addFriend,
   removeFriend,
   readFriend,
-  listFriends
+  listFriends,
+  sortBirthdates,
+  getLatest
 } = require("./friends");
 
 // Help --> node app.js --help
@@ -28,7 +30,7 @@ yargs.command({
       type: "string"
     },
     dob: {
-      describe: "Date of birth",
+      describe: "Date of birth (dd-mm-yyyy)",
       demandOption: true,
       type: "string"
     }
@@ -88,6 +90,30 @@ yargs.command({
   }
 });
 
+// Sort all upcoming birthdates
+// node app.js sort
+// Help --> node app.js sort --help
+
+yargs.command({
+  command: "sort",
+  describe: "Sort all birthdates",
+  handler(argv) {
+    sortBirthdates();
+  }
+});
+
+// Get Latest birthday of a friend
+// node app.js latest
+// Help --> node app.js latest --help
+
+yargs.command({
+  command: "latest",
+  describe: "Get latest upcoming birthdate of a friend",
+  handler(argv) {
+    getLatest();
+  }
+});
+
 // About developer
 // node app.js developer
 // Help --> node app.js developer --help
@@ -105,3 +131,4 @@ yargs.command({
 });
 
 yargs.parse();
+
