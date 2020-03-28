@@ -11,7 +11,7 @@ Birthday Store App is terminal based application developed in [NodeJS](https://n
 `node app.js add --name="Shashi Kant Yadav" --dob="07-12-1998"`
 
 <p align="center">
-  <img src="">
+  <img src="./Images/addFriend.png">
 </p>
 
 If name already present, It will show error
